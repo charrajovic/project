@@ -1,0 +1,15 @@
+<h3>
+Hello from produits
+</h3>
+<table class="table">
+  <tr>
+    <th>Ref</th>
+    <th>quantite</th>
+    <th>prixUnitaire</th>
+  </tr>
+<tr *ngFor="let produit of produits">
+    <th>{{produit.ref}}</th>
+    <th>{{produit.quantite}}</th>
+    <th>{{produit.prixUnitaire}}</th>
+</tr>
+</table>

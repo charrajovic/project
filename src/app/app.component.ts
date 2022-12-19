@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'project';
+  showHiddenSideBar: boolean =false;
+
+  onShowSideBarChange(showHiddenSideBar)
+  {
+    this.showHiddenSideBar = showHiddenSideBar;
+  }
 }
