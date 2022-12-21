@@ -5,9 +5,14 @@ import {ProduitComponent} from './produit/produit.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {ProduitResolver} from './produit/produit.resolver';
 
+import {LoginComponent} from './login/login.component';
+import {HomeComponent} from './home/home.component';
+
 const routes: Routes = [{ path: 'dashboard', component: DashboardComponent, resolve: {produits: ProduitResolver} },
   { path: 'produit', component: ProduitComponent },
-  {path: '', redirectTo: '/dashboard', pathMatch: 'full'}];
+  { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
+  {path: '', redirectTo: '/login', pathMatch: 'full'}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

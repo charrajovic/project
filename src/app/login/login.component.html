@@ -1,0 +1,16 @@
+<div class="">
+  <form [formGroup]="formGroup" (submit)="login()">
+
+    <div class="">
+      <label for="">Username</label>
+      <input type="text" name="" formControlName="username" [(ngModel)]="credentials.username">
+    </div>
+
+    <div class="">
+      <label for="">Password</label>
+      <input type="text" name="" formControlName="password" [(ngModel)]="credentials.password">
+    </div>
+
+    <button class="btn btn-primary">Login</button>
+  </form>
+</div>

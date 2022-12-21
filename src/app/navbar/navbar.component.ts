@@ -20,4 +20,7 @@ export class NavbarComponent {
     this.showSideBar = !this.showSideBar;
     this.showSideBarChange.emit(this.showSideBar);
   }
+  logout(){
+    
+  }
 }
