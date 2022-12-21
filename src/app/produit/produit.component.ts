@@ -74,7 +74,7 @@ export class ProduitComponent implements OnInit{
   deleteProduit()
   {
     const p = this.produitForm.value;
-    this.produitService.deleteProduit(this.selectedProduit.ref as string).subscribe(
+    this.produitService.deleteProduit(this.selectedProduit.id as number).subscribe(
       res => {
         this.selectedProduit = new Produit();
         this.loadProduits();

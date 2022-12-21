@@ -2,12 +2,14 @@
   <div class="col-md-7">
     <table class="table">
       <tr>
+        <th>Id</th>
         <th>Ref</th>
         <th>quantite</th>
         <th>prixUnitaire</th>
         <th><button class="btn btn-outline-primary" (click)="operation = 'add';adding()">ADD</button></th>
       </tr>
     <tr *ngFor="let produit of produits">
+        <th>{{produit.id}}</th>
         <th>{{produit.ref}}</th>
         <th>{{produit.quantite}}</th>
         <th>{{produit.prixUnitaire}}</th>
