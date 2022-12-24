@@ -8,11 +8,12 @@ import {ProduitResolver} from './produit/produit.resolver';
 import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
 
-const routes: Routes = [{ path: 'dashboard', component: DashboardComponent, resolve: {produits: ProduitResolver} },
-  { path: 'produit', component: ProduitComponent },
+const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  {path: '', redirectTo: '/login', pathMatch: 'full'}];
+  { path: 'home', component: HomeComponent , children: [{ path: 'dashboard', component: DashboardComponent, resolve: {produits: ProduitResolver}, outlet: 'contentOutlet' },
+    { path: 'produit', component: ProduitComponent, outlet: 'contentOutlet' },]},
+  {path: '', redirectTo: '/login', pathMatch: 'full'}
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

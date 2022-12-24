@@ -30,7 +30,7 @@ export class LoginComponent {
   }
   login(){
     this.appService.authenticate(this.credentials,() => {
-      this.router.navigateByUrl('/home');
+      //this.router.navigateByUrl('/home');
     })
   }
 
