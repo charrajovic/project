@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  constructor(){
+    document.body.style.backgroundImage = "";
+    document.body.style.backgroundRepeat = "";
+    document.body.style.backgroundSize = "";
+    document.body.style.height="";
+    document.getElementsByTagName("html")[0].style.height='';
+  }
+
 }

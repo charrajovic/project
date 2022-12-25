@@ -1,16 +1,49 @@
-<div class="">
-  <form [formGroup]="formGroup" (submit)="login()">
+<div class="container-fluid">
+        <div class="row top">
 
-    <div class="">
-      <label for="">Username</label>
-      <input type="text" name="" formControlName="username" [(ngModel)]="credentials.username">
+        </div>
+        <div class="row content">
+            <div class="offset-md-4 col-md-4 carte">
+                <form [formGroup]="formGroup" (submit)="login()">
+                    <div class="row">
+                        <div class="offset-1 col-8">
+                            <h3>Sign In</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-1 col-10">
+                            <input type="text" formControlName="username" [(ngModel)]="credentials.username" class="form-control" placeholder="username">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-1 col-10">
+                            <input type="password" formControlName="password" [(ngModel)]="credentials.password" class="form-control" placeholder="password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-1 col-10">
+                            <input type="checkbox">Remember Me
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-1 col-10">
+                            <input type="submit" value="Login" class="btn float-right login_btn">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-1 col-10 low">
+                            <h5>Don't have an account? </h5><a href="{% url 'register' %}">Sign Up</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-1 col-10 low2">
+                            <h5><a class="txxt" href="{% url 'forgot' %}">Forget your password?</a></h5>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row footer">
+
+        </div>
     </div>
-
-    <div class="">
-      <label for="">Password</label>
-      <input type="text" name="" formControlName="password" [(ngModel)]="credentials.password">
-    </div>
-
-    <button class="btn btn-primary">Login</button>
-  </form>
-</div>

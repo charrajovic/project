@@ -1,5 +1,6 @@
 import {Component,OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router'
+import {ActivatedRoute} from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 import {ProduitService} from './produit.service';
 import {Produit} from '../shared/produit';
@@ -16,7 +17,7 @@ export class ProduitComponent implements OnInit{
   operation: string = 'add';
   selectedProduit: Produit;
   produitForm: FormGroup;
-  constructor(private produitService: ProduitService,private fb: FormBuilder,private route: ActivatedRoute)
+  constructor(private produitService: ProduitService,private fb: FormBuilder,private route: ActivatedRoute, private cookieService: CookieService)
   {
     this.produits = [];
     this.selectedProduit = new Produit();
@@ -26,6 +27,9 @@ export class ProduitComponent implements OnInit{
 
   ngOnInit()
   {
+    const response = this.cookieService.get('response');
+    console.log('retrievedObject: ', JSON.parse(response));
+    console.log('hola: ', JSON.parse(response).authorities[0].authority);
     this.initProduit();
     this.produits = this.route.snapshot.data["produits"];
     this.loadProduits();
@@ -52,6 +56,7 @@ export class ProduitComponent implements OnInit{
   addProduit()
   {
     const p = this.produitForm.value;
+    console.log(this.produitForm)
     this.produitService.addProduit(p).subscribe(
       res => {
         this.initProduit();

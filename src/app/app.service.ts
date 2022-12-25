@@ -25,6 +25,7 @@ export class AppService {
               this.authenticated = false;
           }
           console.log(response)
+          this.cookieService.set('response', JSON.stringify(response));
           return callback && callback();
       });
     }
