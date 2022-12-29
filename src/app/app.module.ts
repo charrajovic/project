@@ -18,6 +18,7 @@ import {AppService} from './app.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { XhrInterceptor } from './xhr.interceptor';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { XhrInterceptor } from './xhr.interceptor';
     ContentComponent,
     DashboardComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
