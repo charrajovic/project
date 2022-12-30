@@ -27,6 +27,7 @@ export class ProduitComponent implements OnInit{
 
   ngOnInit()
   {
+    console.log(JSON.parse(localStorage.getItem("session") || '{}').authorities[0].authority)
     const response = this.cookieService.get('response');
     console.log('retrievedObject: ', JSON.parse(response));
     console.log('hola: ', JSON.parse(response).authorities[0].authority);
@@ -46,7 +47,7 @@ export class ProduitComponent implements OnInit{
 
   loadProduits()
   {
-    this.produitService.getProduits().subscribe(
+    this.produitService.getAll().subscribe(
       data => {this.produits = data},
       error => {console.log('error')},
       () => {console.log('Loading data was done.')}
@@ -57,7 +58,7 @@ export class ProduitComponent implements OnInit{
   {
     const p = this.produitForm.value;
     console.log(this.produitForm)
-    this.produitService.addProduit(p).subscribe(
+    this.produitService.add(p).subscribe(
       res => {
         this.initProduit();
         this.loadProduits();
@@ -68,7 +69,7 @@ export class ProduitComponent implements OnInit{
   updateProduit()
   {
     const p = this.produitForm.value;
-    this.produitService.updateProduit(this.selectedProduit).subscribe(
+    this.produitService.update(this.selectedProduit).subscribe(
       res => {
         this.initProduit();
         this.loadProduits();
@@ -79,7 +80,7 @@ export class ProduitComponent implements OnInit{
   deleteProduit()
   {
     const p = this.produitForm.value;
-    this.produitService.deleteProduit(this.selectedProduit.id as number).subscribe(
+    this.produitService.delete(this.selectedProduit.id as number).subscribe(
       res => {
         this.selectedProduit = new Produit();
         this.loadProduits();

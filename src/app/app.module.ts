@@ -12,6 +12,7 @@ import { ContentComponent } from './content/content.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ProduitService} from './produit/produit.service';
+import { UserService } from './user/user.service';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import {AppService} from './app.service';
@@ -19,6 +20,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { XhrInterceptor } from './xhr.interceptor';
 import { UserComponent } from './user/user.component';
+import { CrudComponent } from './shared/crud/crud.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { UserComponent } from './user/user.component';
     DashboardComponent,
     LoginComponent,
     HomeComponent,
-    UserComponent
+    UserComponent,
+    CrudComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { UserComponent } from './user/user.component';
     ProduitService,
     AppService,
     { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
-   CookieService
+   CookieService,
+   UserService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,1 +1,16 @@
-<p>user works!</p>
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th>username</th>
+    <th>password</th>
+    <th>Enable</th>
+  </tr>
+<tr *ngFor="let user of users">
+    <th>{{user['id']}}</th>
+    <th>{{user['username']}}</th>
+    <th>{{user['password']}}</th>
+    <th>{{user['enable']}}</th>
+    <th>
+    </th>
+</tr>
+</table>

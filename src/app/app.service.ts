@@ -25,7 +25,8 @@ export class AppService {
               this.authenticated = false;
           }
           console.log(response)
-          this.cookieService.set('response', JSON.stringify(response));
+          this.cookieService.set('response', JSON.stringify(response),6);
+          localStorage.setItem("session", JSON.stringify(response));
           return callback && callback();
       });
     }

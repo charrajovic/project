@@ -23,6 +23,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
 
+    
     const myCookie = this.cookieService.get('response');
     console.log(myCookie)
 
