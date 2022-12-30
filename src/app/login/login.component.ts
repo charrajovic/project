@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {AppService} from '../app.service';
-import {Router} from '@angular/router'
+import {Router} from '@angular/router';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,9 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder,
               private appService: AppService,
-              private router: Router){
+              private router: Router,
+              private titleService:Title){
+                this.titleService.setTitle("Login");
 
             document.body.style.backgroundImage = "url('assets/images/top.jpg')";
             document.body.style.backgroundRepeat = "no-repeat";

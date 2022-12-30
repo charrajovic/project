@@ -9,6 +9,7 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" [routerLink]="[{outlets: {contentOutlet: 'dashboard'}}]" *ngIf="hasRoleUser()" routerLinkActive="active">Dashboard <span class="sr-only">(current)</span></a>
+        <!-- skipLocationChange -->
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="[{outlets: {contentOutlet: 'produit'}}]" *ngIf="hasRoleUser()" routerLinkActive="active">produit</a>

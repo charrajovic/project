@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {Title} from "@angular/platform-browser";
 
 import { User } from '../shared/user.model';
 
@@ -11,7 +12,9 @@ import { User } from '../shared/user.model';
 export class UserComponent implements OnInit {
 
   users: User[];
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,private titleService:Title) {
+    this.titleService.setTitle("Gestion users");
+  }
 
   ngOnInit() {
     try {

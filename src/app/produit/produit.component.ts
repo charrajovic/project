@@ -1,6 +1,7 @@
 import {Component,OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import {Title} from "@angular/platform-browser";
 
 import {ProduitService} from './produit.service';
 import {Produit} from '../shared/produit';
@@ -17,8 +18,9 @@ export class ProduitComponent implements OnInit{
   operation: string = 'add';
   selectedProduit: Produit;
   produitForm: FormGroup;
-  constructor(private produitService: ProduitService,private fb: FormBuilder,private route: ActivatedRoute, private cookieService: CookieService)
+  constructor(private produitService: ProduitService,private fb: FormBuilder,private route: ActivatedRoute, private cookieService: CookieService,private titleService:Title)
   {
+    this.titleService.setTitle("Produits");
     this.produits = [];
     this.selectedProduit = new Produit();
     this.produitForm;
