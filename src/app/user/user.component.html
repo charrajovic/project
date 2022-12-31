@@ -1,16 +1,44 @@
 <table class="table">
   <tr>
     <th>Id</th>
-    <th>username</th>
-    <th>password</th>
+    <th>Username</th>
+    <th>Roles</th>
     <th>Enable</th>
+    <th><button class="btn btn-outline-primary" (click)="operation = 'add';adding()">ADD</button></th>
   </tr>
 <tr *ngFor="let user of users">
     <th>{{user['id']}}</th>
     <th>{{user['username']}}</th>
-    <th>{{user['password']}}</th>
+    <th><span *ngFor="let roles of user['roles']">{{roles.name}}&nbsp;</span></th>
     <th>{{user['enable']}}</th>
+    <th>
+      <button class="btn btn-outline-primary" (click)="operation = 'edit'; selectedUser = user">Edit</button>
+      <button class="btn btn-outline-danger" (click)="operation = 'remove'; selectedUser = user">Remove</button>
+    </th>
     <th>
     </th>
 </tr>
 </table>
+<div class="card-body">
+  <form [formGroup]="userForm" *ngIf="operation == 'add' || operation == 'edit'">
+    <div class="alert alert-danger" *ngIf="userForm.controls['username'].invalid && (userForm.controls['username'].touched || userForm.controls['username'].dirty)">
+      Ref est obligatoire
+    </div>
+    <div class="form-group">
+      <label>Username:</label>
+      <input type="text" class="form-control" formControlName="username" [(ngModel)]='selectedUser["username"]'>
+    </div>
+    <div class="form-group">
+      <label>Password:</label>
+      <input type="text" class="form-control" formControlName="password" [(ngModel)]='selectedUser["password"]'>
+    </div>
+    <button class="btn btn-success" [disabled]='userForm.pristine || userForm.invalid' (click)="operation == 'add' ? addUser() : operation == 'edit' ? updateUser() : operation == 'remove' ? deleteUser() : ''">{{operation == 'add' ? 'Ajouter' :
+      operation == 'edit' ? 'Modifier' :
+      operation == 'remove' ? 'Supprimer' : ''}}</button>
+  </form>
+</div>
+<div class="" *ngIf="operation == 'remove'">
+  <p>Username : {{selectedUser['username']}}</p>
+  <p>Voulez-vous le supprimer?</p>
+  <button class="btn btn-danger" name="button" [disabled]="!selectedUser['username']" (click)="deleteUser()">Supprimer</button>
+</div>
