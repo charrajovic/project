@@ -8,11 +8,12 @@
   </tr>
 <tr *ngFor="let user of users">
     <th>{{user['id']}}</th>
-    <th>{{user['username']}}</th>
-    <th><span *ngFor="let roles of user['roles']">{{roles.name}}&nbsp;</span></th>
+    <th *ngIf="user['username'] != auth.name">{{user['username']}}</th>
+    <th *ngIf="user['username'] == auth.name" style="color:purple">{{user['username']}}</th>
+    <th><span *ngFor="let rolet of user['roles']">{{rolet.name}}&nbsp;</span></th>
     <th>{{user['enable']}}</th>
     <th>
-      <button class="btn btn-outline-primary" (click)="operation = 'edit'; selectedUser = user">Edit</button>
+      <button class="btn btn-outline-primary" (click)="operation = 'edit'; selectedUser = user;edit()">Edit</button>
       <button class="btn btn-outline-danger" (click)="operation = 'remove'; selectedUser = user">Remove</button>
     </th>
     <th>
@@ -22,15 +23,52 @@
 <div class="card-body">
   <form [formGroup]="userForm" *ngIf="operation == 'add' || operation == 'edit'">
     <div class="alert alert-danger" *ngIf="userForm.controls['username'].invalid && (userForm.controls['username'].touched || userForm.controls['username'].dirty)">
-      Ref est obligatoire
+      username est obligatoire
     </div>
+    <div class="row">
+      <div class="col-md-11">
     <div class="form-group">
       <label>Username:</label>
       <input type="text" class="form-control" formControlName="username" [(ngModel)]='selectedUser["username"]'>
     </div>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-11">
+        <div class="form-group">
+          <label>Password:</label>
+          <input type="text" class="form-control" formControlName="password" [(ngModel)]='selectedUser["password"]'>
+        </div>
+      </div>
+      <div class="col-md-1 passs" *ngIf="operation == 'edit'">
+        <label class="switch ">
+          <input type="checkbox" class="default">
+          <span class="slider" (click)="check = !check;NoPass()"></span>
+        </label>
+      </div>
+    </div>
+    <label class="switch">
+  <input type="checkbox" formControlName="enable">
+  <span class="slider round"></span>
+</label>
     <div class="form-group">
-      <label>Password:</label>
-      <input type="text" class="form-control" formControlName="password" [(ngModel)]='selectedUser["password"]'>
+      <label>Roles:</label>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3">
+              <input type="radio" name="roles" value="ROLE_USER" formControlName="roles">
+              <label for="ROLE_USER">ROLE_USER</label>
+            </div>
+            <div class="col-md-3">
+              <input type="radio" name="roles" value="ROLE_ADMIN" formControlName="roles">
+              <label for="ROLE_ADMIN">ROLE_ADMIN</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <button class="btn btn-success" [disabled]='userForm.pristine || userForm.invalid' (click)="operation == 'add' ? addUser() : operation == 'edit' ? updateUser() : operation == 'remove' ? deleteUser() : ''">{{operation == 'add' ? 'Ajouter' :
       operation == 'edit' ? 'Modifier' :

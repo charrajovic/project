@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import {UserService} from './user.service';
 
 import { User } from '../shared/user.model';
+import { Role } from '../shared/roles.model';
 import {FormGroup,FormBuilder,Validators} from '@angular/forms';
 
 @Component({
@@ -18,12 +19,18 @@ export class UserComponent implements OnInit {
   selectedUser: User;
   userForm: FormGroup;
   users: User[];
-  constructor(private route: ActivatedRoute,private titleService:Title,private userService: UserService,private fb: FormBuilder) {
+  check: boolean = false;
+  auth: any;
+  constructor(private route: ActivatedRoute,private titleService:Title,private userService: UserService,private fb: FormBuilder,private cookieService: CookieService) {
     this.titleService.setTitle("Gestion users");
   }
 
   ngOnInit() {
+    const response = this.cookieService.get('response');
+    this.auth = JSON.parse(response);
+    console.log(this.auth.name);
     try {
+
       this.initUser();
       this.users = this.route.snapshot.data["users"];
       this.initUser();
@@ -32,6 +39,10 @@ export class UserComponent implements OnInit {
       console.log(error)
     }
 
+    this.initradio();
+    this.initenable();
+    console.log(this.userForm.controls["enable"])
+
   }
 
   createForm()
@@ -39,7 +50,8 @@ export class UserComponent implements OnInit {
     this.userForm = this.fb.group({
       username: ['',Validators.required],
       password: '',
-      enable: ''
+      enable: '',
+      roles: ['',Validators.required]
     })
   }
 
@@ -54,24 +66,62 @@ export class UserComponent implements OnInit {
 
   addUser()
   {
-    this.userForm.controls["enable"].setValue(1)
+    console.log(this.userForm.controls['roles'].value)
+    const rol: Role = [{
+      id: 1,
+      name: this.userForm.controls['roles'].value
+  }];
+  if(this.userForm.controls["enable"].value == null)
+  {
+      this.userForm.controls["enable"].setValue(0);
+  }
+  console.log(this.userForm.controls["enable"].value == null)
+    //this.userForm.controls["enable"].setValue(1)
+    this.userForm.controls["roles"].setValue(rol)
+
+    console.log(rol)
     const p = this.userForm.value;
-    console.log(p)
+    console.log(this.userForm)
     this.userService.add(p).subscribe(
       res => {
         this.initUser();
         this.loadUsers();
-      }
+        this.operation = 'add';
+        this.initradio();
+        this.initenable();
+      },
+      err => {
+    if(err.status==500)
+    console.log(err)
+  }
     );
   }
 
   updateUser()
   {
+    console.log(this.selectedUser)
     const p = this.userForm.value;
+    if(this.userForm.controls["enable"].value == null)
+    {
+        this.selectedUser['enable']= 0;
+    }
+    else
+    {
+      this.selectedUser['enable'] = this.userForm.controls["enable"].value
+    }
+    console.log(this.userForm.controls["enable"].value == null)
+    console.log(this.userForm.controls["enable"])
+    console.log(this.userForm.controls['roles'].value)
+    console.log(this.selectedUser['roles'][0].name=this.userForm.controls['roles'].value)
+
     this.userService.update(this.selectedUser).subscribe(
       res => {
         this.initUser();
         this.loadUsers();
+        this.operation = 'add';
+        this.initcheck();
+        this.initradio();
+        this.initenable();
       }
     );
   }
@@ -97,6 +147,51 @@ export class UserComponent implements OnInit {
   adding()
   {
     this.selectedUser = new User();
+    this.initradio();
+  }
+
+  initcheck()
+  {
+    this.check = false;
+  }
+
+  NoPass()
+  {
+    console.log(this.check)
+    if(!this.check)
+    {
+      this.userForm.controls['password'].enable();
+    }
+    else
+    {
+      console.log(this.userForm.controls['password'].setValue(null))
+      this.userForm.controls['password'].disable();
+    }
+  }
+
+  edit()
+  {
+    var role = 'ROLE_USER'
+    console.log(this.selectedUser['roles'][0].name)
+    for (let i = 0; i < this.selectedUser['roles'].length; i++) {
+      if(this.selectedUser['roles'][i].name!=role)
+      {
+        role=this.selectedUser['roles'][i].name
+      }
+    }
+    this.userForm.controls['roles'].setValue(role)
+    console.log(this.selectedUser['enable'])
+    this.userForm.controls["enable"].setValue(this.selectedUser['enable']);
+  }
+
+  initradio()
+  {
+    this.userForm.controls['roles'].setValue('ROLE_USER')
+  }
+
+  initenable()
+  {
+    this.userForm.controls["enable"].setValue(1);
   }
 
 }
